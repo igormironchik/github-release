@@ -57,13 +57,14 @@ int main(int argc,
         return -1;
     }
 
-    QString newVersionUrl;
+    QString newVersionUrl, newVersionTag;
 
     if (GHRelease::isUpdateAvailable(parser.value(user),
                                      parser.value(project),
                                      parser.value(version),
                                      GHRelease::majorMinorPatchCompare,
-                                     newVersionUrl)) {
+                                     newVersionUrl,
+                                     newVersionTag)) {
         qDebug() << "New version available at:" << newVersionUrl;
     } else {
         qDebug() << "There is no update. Latest release available at:" << newVersionUrl;

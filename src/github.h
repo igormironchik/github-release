@@ -29,7 +29,8 @@ bool isUpdateAvailable(const QString &user,
                        const QString &project,
                        const QString &currentVersion,
                        CompareVersion cv,
-                       QString &newVersionUrl)
+                       QString &newVersionUrl,
+                       QString &newVersionTag)
 {
     QNetworkAccessManager net;
     QNetworkRequest req;
@@ -60,12 +61,12 @@ bool isUpdateAvailable(const QString &user,
             static const QString s_htmlUrlName = QStringLiteral("html_url");
 
             if (obj.contains(s_tagName)) {
-                const auto tag = obj.value(s_tagName).toString();
+                newVersionTag = obj.value(s_tagName).toString();
 
                 if (obj.contains(s_htmlUrlName)) {
                     newVersionUrl = obj.value(s_htmlUrlName).toString();
 
-                    if (cv(currentVersion, tag)) {
+                    if (cv(currentVersion, newVersionTag)) {
                         ret = true;
                     }
                 }
