@@ -1,0 +1,10 @@
+version = 1
+SPDX-PackageName = "gif-tools"
+SPDX-PackageSupplier = "Igor Mironchik <igor.mironchik@gmail.com>"
+SPDX-PackageDownloadLocation = "https://github.com/igormironchik/gif-tools"
+
+[[annotations]]
+path = ["README.md", ".gitignore", "REUSE.toml", "apply-clang-format.sh"]
+precedence = "aggregate"
+SPDX-FileCopyrightText = "2026 Igor Mironchik <igor.mironchik@gmail.com>"
+SPDX-License-Identifier = "MIT"
