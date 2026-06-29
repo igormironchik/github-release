@@ -21,15 +21,18 @@ int main(int argc,
     QCommandLineOption user(QStringList()
                                 << "u"
                                 << "user",
-                            QStringLiteral("Uer on GitHub."));
+                            QStringLiteral("User on GitHub."),
+                            QStringLiteral("User name"));
     QCommandLineOption project(QStringList()
                                    << "p"
                                    << "project",
-                               QStringLiteral("Project on GitHub."));
+                               QStringLiteral("Project on GitHub."),
+                               QStringLiteral("Project name"));
     QCommandLineOption version(QStringList()
                                    << "v"
                                    << "current-version",
-                               QStringLiteral("Current version."));
+                               QStringLiteral("Current version."),
+                               QStringLiteral("Version"));
     parser.addOption(user);
     parser.addOption(project);
     parser.addOption(version);
@@ -60,13 +63,11 @@ int main(int argc,
             parser.value(user),
             parser.value(project),
             parser.value(version),
-            [](const QString &latestVersion) -> bool {
-                return true;
-            },
+            GHRelease::majorMinorPatchCompare,
             newVersionUrl)) {
         qDebug() << "New version available at:" << newVersionUrl;
     } else {
-        qDebug() << "There is no update.";
+        qDebug() << "There is no update. Latest release available at:" << newVersionUrl;
     }
 
     return 0;
