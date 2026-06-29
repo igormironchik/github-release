@@ -7,10 +7,12 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
 
-set(SRC main.cpp)
+add_executable(github-release-tool WIN32 main_tool.cpp)
 
-add_executable(github-release-test WIN32 ${SRC})
+target_link_libraries(github-release-tool github-release Qt6::Core)
 
-target_link_libraries(github-release-test github-release Qt6::Core)
+add_executable(github-release-button WIN32 main_button.cpp)
+
+target_link_libraries(github-release-button github-release Qt6::Widgets Qt6::Core)

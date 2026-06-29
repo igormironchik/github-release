@@ -7,18 +7,21 @@
 
 // Qt include.
 #include <QEventLoop>
-#include <QJsonObject>
 #include <QJsonDocument>
+#include <QJsonObject>
 #include <QNetworkAccessManager>
 #include <QNetworkReply>
+#include <QPixmap>
 #include <QString>
 #include <QToolButton>
+#include <QVariantAnimation>
 
 namespace GHRelease
 {
 
 //! Compare versions of type "Major.Minor.Patch".
-bool majorMinorPatchCompare(const QString &current, const QString &latest);
+bool majorMinorPatchCompare(const QString &current,
+                            const QString &latest);
 
 //! Check for updates.
 template<class CompareVersion>
@@ -85,8 +88,31 @@ class NewVersionAvailableButton : public QToolButton
     Q_OBJECT
 
 public:
-    explicit NewVersionAvailableButton(QWidget *parent);
+    //! Default behaviour.
+    enum DefaultBehaviour {
+        DoNothing,
+        OpenUrlOnClick
+    };
+
+    explicit NewVersionAvailableButton(const QString &url,
+                                       DefaultBehaviour behaviour = DoNothing,
+                                       QWidget *parent = nullptr);
     ~NewVersionAvailableButton() override;
+
+protected:
+    void paintEvent(QPaintEvent *e) override;
+
+private:
+    void onAnimationStep(const QVariant &value);
+    void onAnimationFinished();
+    void onStartAnimation();
+
+private:
+    QString m_url;
+    QVariantAnimation *m_anim;
+    QImage m_bgGradient;
+    QImage m_textGradient;
+    qreal m_animProgress = 0.0;
 }; // class NewVersionAvailableButton
 
 } /* namespace GHRelease */
