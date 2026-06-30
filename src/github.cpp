@@ -25,7 +25,7 @@ bool majorMinorPatchCompare(const QString &current,
     const auto currentArray = current.split(s_dot, Qt::SkipEmptyParts);
     const auto latestArray = latest.split(s_dot, Qt::SkipEmptyParts);
 
-    if (currentArray.size() != 3 && currentArray.size() != latestArray.size()) {
+    if (currentArray.size() != 3 || currentArray.size() != latestArray.size()) {
         return false;
     }
 
