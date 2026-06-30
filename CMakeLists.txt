@@ -28,5 +28,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 add_subdirectory(src)
 
 if(BUILD_GITHUB_RELEASE_TESTS)
+    enable_testing()
+
     add_subdirectory(tests)
 endif()

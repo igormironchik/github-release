@@ -7,12 +7,20 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTORCC ON)
 set(CMAKE_AUTOUIC ON)
 
-find_package(Qt6 REQUIRED COMPONENTS Core Widgets)
+find_package(Qt6 REQUIRED COMPONENTS Core Widgets Test)
 
-add_executable(github-release-tool WIN32 main_tool.cpp)
+add_executable(github-release-tool main_tool.cpp)
 
 target_link_libraries(github-release-tool github-release Qt6::Core)
 
 add_executable(github-release-button WIN32 main_button.cpp)
 
 target_link_libraries(github-release-button github-release Qt6::Widgets Qt6::Core)
+
+add_executable(github-release-autotest main_autotest.cpp)
+
+target_link_libraries(github-release-autotest github-release Qt6::Test Qt6::Core)
+
+add_test(NAME github-release-autotest
+    COMMAND github-release-autotest${CMAKE_EXECUTABLE_SUFFIX}
+    WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/../bin)
